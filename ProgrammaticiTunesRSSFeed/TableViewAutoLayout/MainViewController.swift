@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    var listOfAlbums = [Album](){
+    var listOfAlbums = [Album](){// List of
         didSet{// called immediately after new value is stored
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -56,7 +56,6 @@ class MainViewController: UIViewController {
     func getiTunesData(){
         var resourceString = "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/25/explicit.json"
         let baseUrlString = "https://rss.itunes.apple.com/api/v1/us/"
-        //var resourceURL: URL
         
         resourceString = baseUrlString
         resourceString += mediaType + "/"
@@ -92,7 +91,6 @@ class MainViewController: UIViewController {
     }
     
     @objc func settingsButtonTapped(){
-        print("settingButtonTapped")
         let nextScreen = SettingsViewController()
         navigationController?.pushViewController(nextScreen, animated: false)
         
@@ -100,12 +98,12 @@ class MainViewController: UIViewController {
 
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource{// can also be done at top
+extension MainViewController: UITableViewDelegate, UITableViewDataSource{// Can also be done at top
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listOfAlbums.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {// Loads Data in each TableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "mainCell") as! MainTableViewCell
         let myCell = listOfAlbums[indexPath.row]
         cell.set(cell: myCell)
@@ -118,7 +116,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{// can 
         let nextScreen = DetailedViewController()
         
         let album = listOfAlbums[indexPath.row]
-        nextScreen.album = album
+        nextScreen.album = album// Sets the selected cells album to the album in the DetailedView
         
         navigationController?.pushViewController(nextScreen, animated: false)
     }

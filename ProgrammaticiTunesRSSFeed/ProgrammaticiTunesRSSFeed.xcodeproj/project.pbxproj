@@ -461,6 +461,7 @@
 		9463E89823FF29C200D4DA9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L3365JFMNQ;
 				INFOPLIST_FILE = TableViewAutoLayout/Info.plist;
@@ -478,6 +479,7 @@
 		9463E89923FF29C200D4DA9E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L3365JFMNQ;
 				INFOPLIST_FILE = TableViewAutoLayout/Info.plist;

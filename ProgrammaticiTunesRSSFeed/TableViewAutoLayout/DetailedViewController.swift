@@ -25,6 +25,12 @@ class DetailedViewController: UIViewController {
         self.title = album?.name
         self.titleLabel.textColor = .label
         self.view.backgroundColor = .systemBackground
+        
+        addSubViews()
+        configureView()
+    }
+    
+    func addSubViews(){
         view.addSubview(imageView)
         view.addSubview(titleLabel)
         view.addSubview(artistLabel)
@@ -32,7 +38,9 @@ class DetailedViewController: UIViewController {
         view.addSubview(copyrightLabel)
         view.addSubview(secondLinkButton)
         view.addSubview(mainLinkButton)
-        
+    }
+    
+    func configureView(){
         configureImageView()
         setImageConstraints()
         

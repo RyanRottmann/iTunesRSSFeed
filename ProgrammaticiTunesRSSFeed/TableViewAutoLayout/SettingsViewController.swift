@@ -24,44 +24,14 @@ class SettingsViewController: UIViewController {
         view.addSubview(numOfResultsLabel)
         view.addSubview(numOfResultsStepper)
         
-        
         configureMediaType()
         configureNumOfResultsLabel()
         configureNumOfResultsStepper()
         
-        if(mediaType == "apple-music" || mediaType == "ios-apps"){//load feedTypeSC
+        if(mediaType == "apple-music" || mediaType == "ios-apps"){//load feedTypeSC for apple-music and ios-apps otherwise it is hidden
              configureFeedType()
         }
-        
-        print("load")
-    }
-    
-    func configureNumOfResultsLabel(){
-        numOfResultsLabel.text = String("Number of results: \(numOfResults)")
-        numOfResultsLabel.translatesAutoresizingMaskIntoConstraints = false
-        numOfResultsLabel.topAnchor.constraint(equalTo: mediaTypeSC.bottomAnchor, constant: 30).isActive = true
-        numOfResultsLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        numOfResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
-    
-    func configureNumOfResultsStepper(){
-        numOfResultsStepper.translatesAutoresizingMaskIntoConstraints = false
-        numOfResultsStepper.topAnchor.constraint(equalTo: numOfResultsLabel.bottomAnchor, constant: 30).isActive = true
-        numOfResultsStepper.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        numOfResultsStepper.wraps = false
-        numOfResultsStepper.maximumValue = 3
-        numOfResultsStepper.minimumValue = 0
-        numOfResultsStepper.value = numOfResultsIndex
-        numOfResultsStepper.addTarget(self, action: #selector(stepperPressed), for: .valueChanged)
-    }
-    
-    @objc func stepperPressed(){
-        //print(numOfResultsStepper.value)
-        numOfResults = numOfResultsArray[Int(numOfResultsStepper.value)]
-        numOfResultsLabel.text = String("Number of results: \(numOfResults)")
-        numOfResultsIndex = numOfResultsStepper.value
-        reloadData = true
+        //print("load")
     }
     
     func configureMediaType(){
@@ -79,7 +49,6 @@ class SettingsViewController: UIViewController {
         mediaTypeSC.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
         mediaTypeSC.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
     @objc func mediaTypeChanged(_ segmentedControl: UISegmentedControl){
         reloadData = true
         switch (segmentedControl.selectedSegmentIndex) {
@@ -110,8 +79,35 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    func configureFeedType(){
-        if(mediaType == "apple-music"){
+    func configureNumOfResultsLabel(){
+        numOfResultsLabel.text = String("Number of results: \(numOfResults)")
+        numOfResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        numOfResultsLabel.topAnchor.constraint(equalTo: mediaTypeSC.bottomAnchor, constant: 30).isActive = true
+        numOfResultsLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        numOfResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func configureNumOfResultsStepper(){
+        numOfResultsStepper.translatesAutoresizingMaskIntoConstraints = false
+        numOfResultsStepper.topAnchor.constraint(equalTo: numOfResultsLabel.bottomAnchor, constant: 30).isActive = true
+        numOfResultsStepper.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        numOfResultsStepper.wraps = false
+        numOfResultsStepper.maximumValue = 3
+        numOfResultsStepper.minimumValue = 0
+        numOfResultsStepper.value = numOfResultsIndex
+        numOfResultsStepper.addTarget(self, action: #selector(stepperPressed), for: .valueChanged)
+    }
+    @objc func stepperPressed(){
+        //print(numOfResultsStepper.value)
+        numOfResults = numOfResultsArray[Int(numOfResultsStepper.value)]
+        numOfResultsLabel.text = String("Number of results: \(numOfResults)")
+        numOfResultsIndex = numOfResultsStepper.value
+        reloadData = true
+    }
+    
+    func configureFeedType(){// Configures second segmented control
+        if(mediaType == "apple-music"){// Changes titles for feedTypeSC
             feedTypes = ["Top Albums", "Top Songs", "New Music", "Coming Soon"]
         } else {
             feedTypes = ["Top Free", "Top Paid", "Top Grossing", "Top Free iPad"]
@@ -120,12 +116,11 @@ class SettingsViewController: UIViewController {
         feedTypeSC = UISegmentedControl(items: feedTypes)
         
         feedTypeSC.backgroundColor = .gray
-        if(mediaType == "apple-music"){
+        if(mediaType == "apple-music"){// selects correct action for feedTypeSC by mediaType
             feedTypeSC.addTarget(self, action: #selector(feedTypeChanged), for: .valueChanged)
-        } else {
+        } else {// ios-apps
             feedTypeSC.addTarget(self, action: #selector(feedTypeChanged2), for: .valueChanged)
         }
-        
         
         view.addSubview(feedTypeSC)
         feedTypeSC.translatesAutoresizingMaskIntoConstraints = false
@@ -135,8 +130,7 @@ class SettingsViewController: UIViewController {
         feedTypeSC.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
         feedTypeSC.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
-    @objc func feedTypeChanged(_ segmentedControl: UISegmentedControl){
+    @objc func feedTypeChanged(_ segmentedControl: UISegmentedControl){// apple-music
         reloadData = true
         switch (segmentedControl.selectedSegmentIndex) {
         case 0:
@@ -156,7 +150,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    @objc func feedTypeChanged2(_ segmentedControl: UISegmentedControl){
+    @objc func feedTypeChanged2(_ segmentedControl: UISegmentedControl){// ios-apps
         reloadData = true
         switch (segmentedControl.selectedSegmentIndex) {
         case 0:

@@ -35,7 +35,7 @@ class MainTableViewCell: UITableViewCell {
     
     func set(cell: Album){
         
-        [NSLayoutConstraint .deactivate(cellImageView.constraints)]
+        [NSLayoutConstraint .deactivate(cellImageView.constraints)]// Deletes previous constraints
         setImageConstraints()// set image constraints due to variable size
         
         if let imageUrl = URL(string: cell.artworkUrl100),
